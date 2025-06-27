@@ -1,0 +1,4 @@
+backtrader[plotting]
+pandas
+yfinance
+flask
