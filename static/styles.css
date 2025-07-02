@@ -1,0 +1,109 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  margin: 0;
+  padding: 1.3rem 5rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  background: #f8fafc;
+  padding: 1.3rem 2rem;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+}
+header p {
+  display: inline-block;
+  margin: auto;
+  flex-grow: 1;
+}
+header .name {
+  font-size: x-large;
+  font-weight: bolder;
+}
+header .profile {
+  text-align: end;
+  font-size: large;
+  font-weight: 600;
+}
+
+main {
+  border-radius: 2px solid red;
+  max-height: -moz-fit-content;
+  max-height: fit-content;
+}
+main .summary {
+  display: flex;
+  margin-bottom: 2rem;
+  gap: 1.5rem;
+}
+main .summary h3 {
+  color: #4c51bf;
+}
+main .summary div {
+  flex-grow: 1;
+  border-radius: 1rem;
+  padding-left: 1.5rem;
+  min-height: 170px;
+}
+main .summary .balance {
+  background: #f8fafc;
+}
+main .summary .balance p {
+  color: #10b981;
+}
+main .summary .balance .final-bal {
+  font-size: xx-large;
+  font-weight: bolder;
+}
+main .summary .balance .bal-info {
+  margin-top: -1.8rem;
+}
+main .summary .performance {
+  background: #f8fafc;
+}
+main .summary .performance .matrics {
+  display: flex;
+  color: #4c51bf;
+}
+main .summary .performance .matrics .matric {
+  font-size: x-large;
+  font-weight: bolder;
+}
+main .summary .performance .matrics .matric-info {
+  margin-top: -1.8rem;
+  font-weight: 100;
+  font-size: small;
+  color: #6b7280;
+}
+main .summary .backtest-summary {
+  background: #f8fafc;
+}
+main .summary .backtest-summary h3 {
+  margin-bottom: 2rem;
+}
+main .summary .backtest-summary p {
+  /*
+  made p component display flex so that I can move the span to the far left
+  bacause text-align: end; didn't work on span (it works on block elements and
+  span in an inline elment)
+  */
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem 0 0;
+}
+main .summary .backtest-summary p span {
+  font-weight: bolder;
+  color: #4c51bf;
+}
+main .summary .backtest-summary hr {
+  min-width: 150px;
+  margin: -0.5rem 1rem 0 0;
+  border-color: rgba(107, 114, 128, 0.1058823529);
+}
+main .backtesting-panel {
+  background-color: #f8fafc;
+  display: flex;
+}/*# sourceMappingURL=styles.css.map */
