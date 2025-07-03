@@ -1,5 +1,7 @@
+import matplotlib
 import backtrader as bt
 import pandas as pd
+import matplotlib.pyplot as plt
 
 class BollingerBounce(bt.Strategy):
     params = (
@@ -174,4 +176,22 @@ if __name__ == "__main__":
     # ============ PLOT RESULTS ============
     # This will show the observers in action
     print(f"\nGenerating chart with observers...")
-    cerebro.plot(style='candlestick', volume=False)
+    # Generate and store the plot figure
+
+    # Temporarily disable plt.show()
+    plt_show_backup = plt.show
+    plt.show = lambda *args, **kwargs: None
+
+    # Now plot (no window will pop up)
+    plot_figures = cerebro.plot(iplot=False, plot=True)
+
+    # Restore original plt.show() in case it's needed later
+    plt.show = plt_show_backup
+
+    if plot_figures:
+        fig = plot_figures[0][0]  # First strategy, first figure
+        fig.savefig("bollinger_strategy_plot.png", dpi=300)
+        print("Chart saved as 'bollinger_strategy_plot.png'")
+
+        plt.figure(fig.number)
+        plt.show()

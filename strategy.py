@@ -9,12 +9,14 @@ class SMACrossover(bt.Strategy):
         ("pip_risk", 0.0030)
     )
 
+
     def log(self, log_txt):
-        print(f"{log_txt}")
+        self.logs_buffer.append(f"{log_txt}")
 
     def __init__(self):
         self.fast = bt.indicators.SimpleMovingAverage(self.datas[0].close, period=self.p.fast_ma_period)
         self.slow = bt.indicators.SimpleMovingAverage(self.datas[0].close, period=self.p.slow_ma_period)
+        self.logs_buffer = []
         self.order = None
         self.order_type = None
         self.entry_price =  None

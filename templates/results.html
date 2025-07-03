@@ -5,31 +5,31 @@
 
     <div class="balance">
         <h3>Account Balance</h3>
-        <p class="final-bal">$12,000</p>
-        <p class="bal-info">final balance (start: $2000)</p>
+        <p class="final-bal">{{ "R%.2f" | format(final_bal) }}</p>
+        <p class="bal-info">{{ "final balance (start: R%.2f)" | format(initial_bal) }}</p>
     </div>
     <div class="performance">
         <h3>perfomance Matrics</h3>
         <div class="matrics">
             <div>
-                <p class="matric">87%</p>
+                <p class="matric">{{ "%.2f%%"|format((winning_trades / total_trades) * 100) }}</p>
                 <p class="matric-info">WIN RATE</p>
             </div>
 
             <div>
-                <p class="matric">124</p>
-                <p class="matric-info">TOT TRADES</p>
+                <p class="matric">{{ total_trades }}</p>
+                <p class="matric-info">TOTAL TRADES</p>
             </div>
         </div>
     </div>
     <div class="backtest-summary">
         <h3>backtesting summary</h3>
 
-        <p>total returns <span>24.7%</span></p>
+        <p>total returns <span>{{ "%.2f%%" | format(total_trades) }}</span></p>
         <hr>
-        <p>max drawdown <span>-8.3%</span></p>
+        <p>max drawdown <span>{{ "%.2f%%"|format(max_drawdown) }}</span></p>
         <hr>
-        <p>sharpe ratio <span>1.42</span></p>
+        <p>sharpe ratio <span>{{ "%.2f"|format(sharpe_ratio) }}</span></p>
     </div>
 
 </section>
@@ -37,8 +37,9 @@
 <section class="backtesting-panel">
 
     <div class="results-chart">
-        <h3>BackTesting GBPUSD</h3>
+        <h3>BackTesting {{pair}}</h3>
         <div class="chart">
+            <img src="./static/images/strategy_plot.png" >
         </div>
     </div>
 
@@ -61,14 +62,7 @@
                     <option value="none">Select a currency pair...</option>
                     <option value="GBPUSD">GBPUSD</option>
                     <option value="EURUSD">EURUSD</option>
-                    <option value="AUDUSD">EURJPY</option>
-                    <option value="AUDUSD">EURGBP</option>
-                    <option value="AUDUSD">GBPJPY</option>
-                    <option value="AUDUSD">NZDUSD</option>
                     <option value="AUDUSD">AUDUSD</option>
-                    <option value="AUDUSD">USDCAD</option>
-                    <option value="AUDUSD">USDCHF</option>
-                    <option value="AUDUSD">USDJPY</option>
                 </select>
             </div>
 
