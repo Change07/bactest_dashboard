@@ -141,7 +141,11 @@ main .backtesting-panel .results-chart:hover {
 main .backtesting-panel .results-chart h3 {
   color: #4c51bf;
   display: flex;
-  justify-content: space-between;
+}
+main .backtesting-panel .results-chart h3 span {
+  color: #764ba2;
+  flex-grow: 1;
+  text-align: center;
 }
 main .backtesting-panel .results-chart .chart {
   margin: 0;
