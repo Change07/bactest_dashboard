@@ -2,6 +2,7 @@ from flask import Flask, render_template, url_for, redirect, request
 import matplotlib
 matplotlib.use('Agg')
 import sys
+import os
 sys.modules['matplotlib.backends.backend_tkagg'] = None 
 import matplotlib.pyplot as plt
 
@@ -22,8 +23,7 @@ def index():
 @app.route("/dashboard", methods=["GET","POST"])
 def dashboard():
 
-        #add a datafeed to cerebro
-    #df = yf.download("EURUSD=X", period="1y")
+        # getting parameters from the html form
     if request.method == "POST":
         test_strategy  = request.form["strategies"]
 
@@ -33,19 +33,26 @@ def dashboard():
         except:
             initial_capital = 500
 
-        print(test_strategy, pair, initial_capital)
     
     if (not test_strategy) or (not pair) or ("none" in [test_strategy, pair]):
         return redirect(url_for("index"))
     
+
     cerebro = bt.Cerebro()
 
-    # Load and prepare the data
-    df = pd.read_csv(f"datasets/{pair}.csv", index_col=0, parse_dates=True) # date need to be parsed to a datetime object
-    df = df[['Open', 'High', 'Low', 'Close', 'Volume']] #removes unnecessary columns
+        #add a datafeed to cerebro
+    filename = f"datasets/{pair}.csv"
+    if not os.path.exists(filename):
+
+        df = yf.download(f"{pair}=X", period="1y")
+        df.to_csv(filename)
 
     # Feed into backtrader
-    data = bt.feeds.PandasData(dataname=df)
+    df = pd.read_csv(filename, index_col=0, parse_dates=True)
+    df = df[["Open", "High", "Low", "Close", "Volume"]]
+    df = df.dropna()
+
+    data = data = bt.feeds.PandasData(dataname=df, openinterest=-1)
     cerebro.adddata(data)
 
 
@@ -55,7 +62,7 @@ def dashboard():
     elif test_strategy == "BollingerBounce":
         cerebro.addstrategy(BollingerBounce)
 
-        #set the intitial trading amount or testing
+        #set the intitial trading capital and risk size (number of units to buy/sell per trade)
     if initial_capital:
         cerebro.broker.setcash(initial_capital)
         cerebro.addsizer(bt.sizers.FixedSize, stake=initial_capital//10)
@@ -65,19 +72,16 @@ def dashboard():
     cerebro.addanalyzer(bt.analyzers.SharpeRatio, _name="sharpe_ratio")
     cerebro.addanalyzer(bt.analyzers.DrawDown, _name="drawdown")
     cerebro.addanalyzer(bt.analyzers.Returns, _name="returns")
-    cerebro.addanalyzer(bt.analyzers.SQN, _name="sqn")
+    #cerebro.addanalyzer(bt.analyzers.SQN, _name="sqn")
 
 
-    #TO DO:
-        #Get the analyzer performance metrics
 
     initial_bal = cerebro.broker.getvalue()
-
     result = cerebro.run() #run backtesting and catch results
-    strategy = result[0] # get the first (probs only) strategy
-
+    strategy = result[0] # get the first strategy results
     final_bal = cerebro.broker.getvalue()
 
+        #trade matrics
     trade_analyzer = strategy.analyzers.trade_analyzer.get_analysis()
     total_trades = trade_analyzer.get("total", {}).get("total", 0)
     winning_trades = trade_analyzer.get("won", {}).get("total", 0)
@@ -103,7 +107,8 @@ def dashboard():
     if "sharperatio" in sharpe:
         ratio = sharpe["sharperatio"]
 
-        # Temporarily disable plt.show()
+        # Temporarily disable plt.show()    
+        # did it to prevent bactrader from plotting trading results automatically when I run cerebro.plot() 
     plt_show_backup = plt.show
     plt.show = lambda *args, **kwargs: None
 
@@ -123,4 +128,4 @@ def dashboard():
 
 
 if __name__=="__main__":
-    app.run(debug=True)
+    app.run()

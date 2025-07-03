@@ -53,6 +53,11 @@ main .summary div {
 }
 main .summary .balance {
   background: #f8fafc;
+  transition: all 0.05s;
+}
+main .summary .balance:hover {
+  margin-top: -0.5rem;
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.15);
 }
 main .summary .balance h3 {
   margin-bottom: -1.2rem;
@@ -69,6 +74,11 @@ main .summary .balance .bal-info {
 }
 main .summary .performance {
   background: #f8fafc;
+  transition: all 0.05s;
+}
+main .summary .performance:hover {
+  margin-top: -0.5rem;
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.15);
 }
 main .summary .performance .matrics {
   display: flex;
@@ -86,6 +96,10 @@ main .summary .performance .matrics .matric-info {
 }
 main .summary .backtest-summary {
   background: #f8fafc;
+  transition: margin-top 0.05s;
+}
+main .summary .backtest-summary:hover {
+  margin-top: -0.5rem;
 }
 main .summary .backtest-summary h3 {
   margin-bottom: 2rem;
@@ -118,9 +132,16 @@ main .backtesting-panel .results-chart {
   background-color: #f8fafc;
   border-radius: 1rem;
   padding: 0.5rem 1.5rem;
+  transition: margin-top 0.05s;
+}
+main .backtesting-panel .results-chart:hover {
+  margin-top: -0.5rem;
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.15);
 }
 main .backtesting-panel .results-chart h3 {
   color: #4c51bf;
+  display: flex;
+  justify-content: space-between;
 }
 main .backtesting-panel .results-chart .chart {
   margin: 0;
@@ -138,6 +159,11 @@ main .backtesting-panel .form-grp {
   border-radius: 1rem;
   flex: 1 1 auto;
   padding: 1rem;
+  transition: margin-top 0.05s;
+}
+main .backtesting-panel .form-grp:hover {
+  margin-top: -0.5rem;
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.15);
 }
 main .backtesting-panel .form-grp h3 {
   color: #4c51bf;
